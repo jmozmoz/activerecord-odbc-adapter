@@ -36,7 +36,7 @@ module ODBCExt
   def last_insert_id(table, sequence_name, stmt = nil)
     @logger.unknown("ODBCAdapter#last_insert_id>") if @trace
     @logger.unknown("args=[#{table}]") if @trace
-    select_value("VALUES IDENTITY_VAL_LOCAL()", 'last_insert_id')    
+    select_value("SELECT IDENTITY_VAL_LOCAL() FROM #{table}", 'last_insert_id')    
   end
   
   # ------------------------------------------------------------------------
