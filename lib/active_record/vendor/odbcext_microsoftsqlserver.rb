@@ -78,6 +78,20 @@ module ODBCExt
   # DBMS specific methods which override the default implementation 
   # provided by the ODBCAdapter core.
   # 
+
+  def quoted_date(value)
+    @logger.unknown("ODBCAdapter#quoted_date (MS SQL)>") if @trace
+    @logger.unknown("args=[#{value}]") if @trace
+    # MS SQL DBTIME and DBDATE environment variables should be set to:
+    # DBTIME=%d.%m.%Y %H:%M:%S
+    # DBDATE=%d.%m.%Y
+    if value.acts_like?(:time) # Time, DateTime
+      %Q!'#{value.strftime("%Y%m%d %H:%M:%S")}'!
+    else # Date
+      %Q!'#{value.strftime("%Y%m%d")}'!
+    end
+  end
+  
   def create_database(name)
     @logger.unknown("ODBCAdapter#create_database>") if @trace
     @logger.unknown("args=[#{name}]") if @trace    
