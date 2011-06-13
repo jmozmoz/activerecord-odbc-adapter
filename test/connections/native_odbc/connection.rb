@@ -35,9 +35,30 @@ RAILS_DEFAULT_LOGGER = Logger.new("debug_odbc.log")
 ActiveRecord::Base.logger = RAILS_DEFAULT_LOGGER
 
 ###########################################
-# Using DSN connection
+# Using DSN-less connection with MS Access
 
 #=begin
+ActiveRecord::Base.configurations = {
+  'arunit' => {
+    :adapter  => "odbc",
+    :conn_str=>"Driver={Microsoft Access Driver (*.mdb)};DBQ=rails_testdb1.mdb",
+    :trace    => false
+  },
+ 'arunit2' => {
+    :adapter  => "odbc",
+    :conn_str=>"Driver={Microsoft Access Driver (*.mdb)};DBQ=rails_testdb2.mdb",
+    :trace    => false
+  }
+}
+
+ActiveRecord::Base.establish_connection 'arunit'
+Course.establish_connection 'arunit2'
+#=end
+
+###########################################
+# Using DSN connection
+
+=begin
 ActiveRecord::Base.configurations = {
   'arunit' => {
     :adapter  => "odbc",
@@ -59,7 +80,7 @@ ActiveRecord::Base.configurations = {
 
 ActiveRecord::Base.establish_connection 'arunit'
 Course.establish_connection 'arunit2'
-#=end
+=end
 
 ###########################################
 # Using DSN-less connection

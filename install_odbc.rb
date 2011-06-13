@@ -156,7 +156,7 @@ puts "\nCopying ODBC Adapter files into the ActiveRecord tree."
 puts "-"*60
 Find.find("lib/active_record") { |f|
   puts f
-  if f[-3..-1] == ".rb"
+  if File.extname(f) == ".rb"
     dest = File.join($activeRecDir, *f.split(/\//))		
     # File::install fails if file already exists
     FileUtils.rm(dest, {:force => true})
@@ -170,7 +170,22 @@ Find.find("lib/active_record") { |f|
   end
 }
 Find.find("test") { |f|
-  if f[-3..-1] == ".rb" or f[-4..-1] == ".sql"
+  if File.extname(f) == ".rb"
+    dest = File.join($activeRecDir, *f.split(/\//))   
+    # File::install fails if file already exists
+    FileUtils.rm(dest, {:force => true})
+    FileUtils.mkdir_p(File.dirname(dest))
+    rc = File::install(f, dest, 0644, true)
+    if rc != 1
+      puts "ERROR>> File::install(#{f}, #{dest}, ...) failed"
+      exit 3
+    end
+    puts
+  end
+}
+Find.find("rakelib") { |f|
+  puts f
+  if File.extname(f) == ".rake"
     dest = File.join($activeRecDir, *f.split(/\//))   
     # File::install fails if file already exists
     FileUtils.rm(dest, {:force => true})
@@ -210,7 +225,7 @@ elsif CONFIG['target_vendor'] == 'pc'
     require 'rubygems'
     require 'odbc'
     puts "\n#{$odbcBridge} available via Ruby ODBC gem"
-  rescue
+  rescue LoadError
   puts <<MSG3
 \nWARNING>> #{$odbcBridge} is not present.
 \nThe Ruby ODBC gem must be installed before the Activerecord ODBC Adapter can be used.
