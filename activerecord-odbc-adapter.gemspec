@@ -1,12 +1,12 @@
 Gem::Specification.new do |s|
   s.name = %q{activerecord-odbc-adapter}
-  s.version = "2.3.1"
+  s.version = "2.4.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Carl Blakeley", "Sytse Sijbrandij", "James Herdman", "Andrew Rollins"]
   s.autorequire = %q{odbc_adapter}
-  s.date = %q{2009-07-14}
-  s.email = %q{andrew311@gmail.com}
+  s.date = %q{2011-06-13}
+  s.email = %q{Joachim.Herb@gmx.de}
   s.extra_rdoc_files = ["README.markdown", "COPYING"]
   s.files = ["lib/active_record", "lib/active_record/connection_adapters", "lib/active_record/connection_adapters/odbc_adapter.rb", "lib/active_record/vendor", "lib/active_record/vendor/odbcext_oracle.rb", "lib/active_record/vendor/odbcext_informix.rb", "lib/active_record/vendor/odbcext_progress89.rb", "lib/active_record/vendor/odbcext_microsoftsqlserver_col.rb", "lib/active_record/vendor/odbcext_informix_col.rb", "lib/active_record/vendor/odbcext_sqlanywhere.rb", "lib/active_record/vendor/odbcext_postgresql.rb", "lib/active_record/vendor/odbcext_sybase_col.rb", "lib/active_record/vendor/odbcext_mysql.rb", "lib/active_record/vendor/odbcext_db2.rb", "lib/active_record/vendor/odbcext_progress.rb", "lib/active_record/vendor/odbcext_microsoftsqlserver.rb", "lib/active_record/vendor/odbcext_ingres.rb", "lib/active_record/vendor/odbcext_sqlanywhere_col.rb", "lib/active_record/vendor/odbcext_virtuoso.rb", "lib/active_record/vendor/odbcext_sybase.rb", "lib/active_record/vendor/odbcext_access.rb", "lib/odbc_adapter.rb", "test/connections", "test/connections/native_odbc", "test/connections/native_odbc/connection.rb", "test/fixtures", "test/fixtures/db_definitions", "test/fixtures/db_definitions/db22.drop.sql", "test/fixtures/db_definitions/progress2.drop.sql", "test/fixtures/db_definitions/ingres2.sql", "test/fixtures/db_definitions/oracle_odbc.drop.sql", "test/fixtures/db_definitions/mysql2.sql", "test/fixtures/db_definitions/virtuoso.sql", "test/fixtures/db_definitions/virtuoso2.drop.sql", "test/fixtures/db_definitions/postgresql2.sql", "test/fixtures/db_definitions/db2.drop.sql", "test/fixtures/db_definitions/informix2.sql", "test/fixtures/db_definitions/postgresql2.drop.sql", "test/fixtures/db_definitions/progress2.sql", "test/fixtures/db_definitions/mysql.drop.sql", "test/fixtures/db_definitions/sybase2.sql", "test/fixtures/db_definitions/sybase.sql", "test/fixtures/db_definitions/mysql.sql", "test/fixtures/db_definitions/sqlserver2.sql", "test/fixtures/db_definitions/oracle_odbc2.drop.sql", "test/fixtures/db_definitions/sqlserver.drop.sql", "test/fixtures/db_definitions/virtuoso2.sql", "test/fixtures/db_definitions/db2.sql", "test/fixtures/db_definitions/ingres.sql", "test/fixtures/db_definitions/oracle_odbc.sql", "test/fixtures/db_definitions/progress.drop.sql", "test/fixtures/db_definitions/sqlserver.sql", "test/fixtures/db_definitions/sybase.drop.sql", "test/fixtures/db_definitions/postgresql.sql", "test/fixtures/db_definitions/informix2.drop.sql", "test/fixtures/db_definitions/mysql2.drop.sql", "test/fixtures/db_definitions/progress.sql", "test/fixtures/db_definitions/sqlserver2.drop.sql", "test/fixtures/db_definitions/virtuoso.drop.sql", "test/fixtures/db_definitions/informix.drop.sql", "test/fixtures/db_definitions/db22.sql", "test/fixtures/db_definitions/sybase2.drop.sql", "test/fixtures/db_definitions/informix.sql", "test/fixtures/db_definitions/postgresql.drop.sql", "test/fixtures/db_definitions/ingres2.drop.sql", "test/fixtures/db_definitions/oracle_odbc2.sql", "test/fixtures/db_definitions/ingres.drop.sql", "support/pack_odbc.rb", "support/odbc_rails.diff", "support/lib", "support/lib/active_record", "support/lib/active_record/connection_adapters", "support/lib/active_record/connection_adapters/abstract", "support/lib/active_record/connection_adapters/abstract/schema_definitions.rb", "support/rake_fixes", "support/rake_fixes/databases.dif", "support/rake_fixes/README", "support/rake", "support/rake/rails_plugin_package_task.rb", "support/test", "support/test/migration_test.rb", "support/test/base_test.rb", "AUTHORS", "ChangeLog", "COPYING", "LICENSE", "NEWS", "README.markdown"]
   s.has_rdoc = true
@@ -15,6 +15,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   s.rubygems_version = %q{1.2.0}
   s.summary = %q{ODBC Data Adapter for ActiveRecord}
+  s.add_runtime_dependency "activerecord", ">= 2.3.0", "<3.0"
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
