@@ -25,15 +25,19 @@
 #
 
 print "Using native ODBC\n"
-require_dependency 'fixtures/course'
+require_dependency 'models/course'
 require 'logger'
 
 RAILS_DEFAULT_LOGGER = Logger.new("debug_odbc.log")
 #Logger level default is the lowest available, Logger::DEBUG
 #RAILS_DEFAULT_LOGGER.level = Logger::WARN
-RAILS_DEFAULT_LOGGER.colorize_logging = false
+#RAILS_DEFAULT_LOGGER.colorize_logging = false
 ActiveRecord::Base.logger = RAILS_DEFAULT_LOGGER
 
+###########################################
+# Using DSN connection
+
+#=begin
 ActiveRecord::Base.configurations = {
   'arunit' => {
     :adapter  => "odbc",
@@ -55,6 +59,7 @@ ActiveRecord::Base.configurations = {
 
 ActiveRecord::Base.establish_connection 'arunit'
 Course.establish_connection 'arunit2'
+#=end
 
 ###########################################
 # Using DSN-less connection
