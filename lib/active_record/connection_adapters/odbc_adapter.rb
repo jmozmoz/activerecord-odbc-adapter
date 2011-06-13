@@ -246,7 +246,7 @@ begin
             # Uses dbmsName as key and dbmsMajorVer as a subkey.          
             :access => {
               :any_version => {
-                :primary_key => "COUNTER (START WITH 1) PRIMARY KEY",
+                :primary_key => "COUNTER PRIMARY KEY",
                 :has_autoincrement_col => true,
                 :supports_migrations => true,
                 :supports_schema_names => false,
