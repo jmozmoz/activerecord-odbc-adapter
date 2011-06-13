@@ -5,6 +5,27 @@
 
 # Status
 
+**13-Jun-2011**
+
+Added support for MS Access.
+Tested with the following system:
+
+    >ruby -v
+    ruby 1.8.7 (2011-02-18 patchlevel 334) [i386-mingw32]
+    >ruby -e "require 'rubygems';require 'active_record'; puts ActiveRecord::VERSION::STRING"
+    2.3.12
+
+To run the unit tests of Activerecord download the rails source code using the 2-3-stable branch:
+https://github.com/rails/rails/tree/2-3-stable. Run the install_odbc.rb script to copy all 
+necessary files into the activerecord source, switch to that directory and start the tests:
+
+    install_odbc.rb c:\path\to\rails\activerecord
+    cd c:\path\to\rails\activerecord
+    rake test_odbc
+
+If the ODBC drivers for MS Access are installed two database files will be created and
+the tests will run. There are lots of failures/errors but it's a start.
+
 **22-Nov-2008**
 
 Added new install information

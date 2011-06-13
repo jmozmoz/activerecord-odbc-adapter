@@ -27,6 +27,7 @@
 print "Using native ODBC\n"
 require_dependency 'models/course'
 require 'logger'
+require 'win32ole'
 
 RAILS_DEFAULT_LOGGER = Logger.new("debug_odbc.log")
 #Logger level default is the lowest available, Logger::DEBUG
@@ -34,10 +35,38 @@ RAILS_DEFAULT_LOGGER = Logger.new("debug_odbc.log")
 #RAILS_DEFAULT_LOGGER.colorize_logging = false
 ActiveRecord::Base.logger = RAILS_DEFAULT_LOGGER
 
+BASE_DIR = FIXTURES_ROOT
+msaccess_test_db  = "#{BASE_DIR}/rails_testdb1.mdb"
+msaccess_test_db2 = "#{BASE_DIR}/rails_testdb2.mdb"
+
 ###########################################
 # Using DSN-less connection with MS Access
+# with possibly non-existing files
 
-#=begin
+def make_connection(clazz, arunit, db_file)
+  ActiveRecord::Base.configurations[arunit] = 
+    { :adapter => 'odbc', 
+      :conn_str => "Driver={Microsoft Access Driver (*.mdb)};DBQ=#{db_file}", 
+      :trace => false
+    }
+  unless File.exist?(db_file)
+    puts "MS Access database not found at #{db_file}. Rebuilding it."
+    conn = WIN32OLE.new("ADOX.Catalog")
+    connection_string = "Provider=Microsoft.Jet.OLEDB.4.0;Data Source=#{db_file}"
+    conn.Create(connection_string)
+  end
+  clazz.establish_connection(arunit)
+
+end
+
+make_connection(ActiveRecord::Base, 'arunit', msaccess_test_db)
+make_connection(Course, 'arunit2', msaccess_test_db2)
+
+###########################################
+# Using DSN-less connection with MS Access
+# with existing files
+
+=begin
 ActiveRecord::Base.configurations = {
   'arunit' => {
     :adapter  => "odbc",
@@ -53,7 +82,7 @@ ActiveRecord::Base.configurations = {
 
 ActiveRecord::Base.establish_connection 'arunit'
 Course.establish_connection 'arunit2'
-#=end
+=end
 
 ###########################################
 # Using DSN connection
