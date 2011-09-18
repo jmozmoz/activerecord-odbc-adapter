@@ -29,7 +29,7 @@ require_dependency 'models/course'
 require 'logger'
 require 'win32ole'
 
-RAILS_DEFAULT_LOGGER = Logger.new("debug_odbc.log")
+RAILS_DEFAULT_LOGGER = Logger.new("debug_access_odbc.log")
 #Logger level default is the lowest available, Logger::DEBUG
 #RAILS_DEFAULT_LOGGER.level = Logger::WARN
 #RAILS_DEFAULT_LOGGER.colorize_logging = false
@@ -44,10 +44,10 @@ msaccess_test_db2 = "#{BASE_DIR}/rails_testdb2.mdb"
 # with possibly non-existing files
 
 def make_connection(clazz, arunit, db_file)
-  ActiveRecord::Base.configurations[arunit] = 
-    { :adapter => 'odbc', 
-      :conn_str => "Driver={Microsoft Access Driver (*.mdb)};DBQ=#{db_file}", 
-      :trace => false
+  ActiveRecord::Base.configurations[arunit] =
+    { :adapter => 'odbc',
+      :conn_str => "Driver={Microsoft Access Driver (*.mdb)};DBQ=#{db_file}",
+      :trace => true
     }
   unless File.exist?(db_file)
     puts "MS Access database not found at #{db_file}. Rebuilding it."
@@ -86,8 +86,30 @@ Course.establish_connection 'arunit2'
 
 ###########################################
 # Using DSN connection
-
 =begin
+
+ActiveRecord::Base.configurations = {
+  'arunit' => {
+    :adapter  => "odbc",
+    :dsn      => "a609_test1",
+    :username => "scott",
+    :password => "tiger",
+    :emulate_booleans => true,
+    :trace    => true
+  },
+ 'arunit2' => {
+    :adapter  => "odbc",
+    :dsn      => "a609_test2",
+    :username => "scott",
+    :password => "tiger",
+    :emulate_booleans => true,
+    :trace    => true
+  }
+}
+
+ActiveRecord::Base.establish_connection 'arunit'
+Course.establish_connection 'arunit2'
+
 ActiveRecord::Base.configurations = {
   'arunit' => {
     :adapter  => "odbc",
@@ -95,15 +117,15 @@ ActiveRecord::Base.configurations = {
     :username => "scott",
     :password => "tiger",
     :emulate_booleans => true,
-    :trace    => false
+    :trace    => true
   },
  'arunit2' => {
     :adapter  => "odbc",
-    :dsn      => "a609_ora10_alice_test1",
+    :dsn      => "a609_ora10_alice_test2",
     :username => "scott",
     :password => "tiger",
     :emulate_booleans => true,
-    :trace    => false
+    :trace    => true
   }
 }
 
