@@ -144,6 +144,7 @@ module ODBCExt
     @logger.unknown("sql=[#{sql}|#{sequence_column}]") if @trace
     idQuoteChar = @dsInfo.info[ODBC::SQL_IDENTIFIER_QUOTE_CHAR]
     valQuoteChar = "'"
+    sql.gsub!(/\r\n/, '\r\n') # escape CRLF
     sql =~ /(.*)\((.*)\) *VALUES *\((.*)\)(.*)/
     start = $1
     columns = FasterCSV.parse($2, :quote_char=>idQuoteChar, :col_sep=>', ').flatten
@@ -164,7 +165,7 @@ module ODBCExt
         values[i].gsub!(/#{valQuoteChar}/, "#{valQuoteChar}#{valQuoteChar}") # requote quote char
         values[i] = Regexp.escape(values[i]) # now escape it to use it in the regexp below
         rest_str =~ /^ *(#{valQuoteChar}*#{values[i]}[^,]*),* *.*/
-        new_values << $1
+        new_values << $1.gsub('\r\n', "\r\n") # insert CRLF again
         @logger.unknown("columns[i]=#{columns[i]}") if @trace
         @logger.unknown("$1=#{$1}") if @trace
       end
