@@ -167,7 +167,7 @@ module ODBCExt
         rest_str =~ /^ *(#{valQuoteChar}*#{values[i]}[^,]*),* *.*/
         new_values << $1.gsub('\r\n', "\r\n") # insert CRLF again
         @logger.unknown("columns[i]=#{columns[i]}") if @trace
-        @logger.unknown("$1=#{$1}") if @trace
+        @logger.unknown("$1=#{new_values.last}") if @trace
       end
       rest_str =~ /^ *#{valQuoteChar}*#{values[i]}[^,]*, *(.*)/
       rest_str = $1

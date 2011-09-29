@@ -266,7 +266,7 @@ module ODBCExt
         rest_str =~ /^ *(#{valQuoteChar}*#{values[i]}[^,]*),* *.*/
         new_values << $1.gsub('\r\n', "\r\n") # insert CRLF again
         @logger.unknown("columns[i]=#{columns[i]}") if @trace
-        @logger.unknown("$1=#{$1}") if @trace
+        @logger.unknown("$1=#{new_values.last}") if @trace
       end
       if (columns[i] == sequence_column) and (values[i] != "NULL")
         @connection.do(enable_identity_insert(@iiTable, true))
