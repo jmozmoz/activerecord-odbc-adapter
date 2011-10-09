@@ -22,7 +22,7 @@
 #
 
 require 'active_record/connection_adapters/abstract_adapter'
-require 'faster_csv'
+require "csv"
 
 module ODBCExt
 
@@ -147,8 +147,8 @@ module ODBCExt
     sql.gsub!(/\r\n/, '\r\n') # escape CRLF
     sql =~ /(.*)\((.*)\) *VALUES *\((.*)\)(.*)/
     start = $1
-    columns = FasterCSV.parse($2, :quote_char=>idQuoteChar, :col_sep=>', ').flatten
-    values =  FasterCSV.parse($3, :quote_char=>valQuoteChar, :col_sep=>', ').flatten
+    columns = CSV.parse($2, :quote_char=>idQuoteChar, :col_sep=>', ').flatten
+    values =  CSV.parse($3, :quote_char=>valQuoteChar, :col_sep=>', ').flatten
     rest_str = $3
     rest = $4
     @logger.unknown("start=#{start}") if @trace

@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name = %q{activerecord-odbc-adapter}
-  s.version = "2.4.3"
+  s.version = "2.4.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Carl Blakeley", "Sytse Sijbrandij", "James Herdman", "Andrew Rollins"]
@@ -16,7 +16,6 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.2.0}
   s.summary = %q{ODBC Data Adapter for ActiveRecord}
   s.add_runtime_dependency "activerecord", ">= 2.3.0", "<3.0"
-  s.add_runtime_dependency "fastercsv"
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
